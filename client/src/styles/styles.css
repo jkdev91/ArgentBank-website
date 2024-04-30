@@ -292,3 +292,7 @@ body {
     width: 200px;
   }
 }
+
+.fa-user-circle {
+  padding-right: 5px;
+}

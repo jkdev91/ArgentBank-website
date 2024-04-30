@@ -1,12 +1,12 @@
 import AmountItem from '../components/AccountItem.jsx'
+import Edit from '../components/editUserName.jsx'
+
+
 function Userprofil() {
-    return (
-        <>
-        <main className="main bg-dark">
-      <div className="header">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
-        <button className="edit-button">Edit Name</button>
-      </div>
+  return (
+    <>
+    <main className="main bg-dark">
+      <Edit />
       <h2 className="sr-only">Accounts</h2>
       <section className="account">
         <div className="account-content-wrapper">
@@ -44,8 +44,8 @@ function Userprofil() {
       description = "good " 
       /> */}
     </main>
-        </>
-    )
+    </>   
+  )
 }
 
 export default Userprofil

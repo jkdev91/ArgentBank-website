@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import UserNavLink from "./UserNavLink"
 
 function Header() {
     return (
@@ -12,10 +13,10 @@ function Header() {
                     />
                     <h1 className="sr-only">Argent Bank</h1>
                 </Link>
-                <div>
+                <div>  
                 <Link className="main-nav-item" to="/Login">
                     <i className="fa fa-user-circle"></i>
-                    Sign
+                      Sign
                 </Link>
                 </div>
             </nav>
