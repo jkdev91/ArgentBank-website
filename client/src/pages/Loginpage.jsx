@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import { loginUser } from '../store/authSlice';
+import { getUserInfo } from '../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -28,6 +29,7 @@ function LoginPage() {
                 navigate('/Userprofil');
             };
         });
+        dispatch(getUserInfo())
     };
 
 
