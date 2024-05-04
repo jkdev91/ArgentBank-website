@@ -1,25 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 
-export const token = localStorage.getItem('user');
+// const token = localStorage.getItem('user');
+// const token = useSelector((state) => state.auth.token)
 
 
 // action asynchrome pour récuperer les infos du user
-export const getUserInfo = createAsyncThunk(
-    'user/getUserInfo',
-    async () => {
-        if (!token) {
-            throw new Error('no token found in localstorage');
-        }
+export const getUserProfile = createAsyncThunk(
+    'user/getUserProfile',
+    async (token) => {
         const request = await axios.post('http://localhost:3001/api/v1/user/profile', {} , {
             headers: {
                 'content-type': "application/json",
-                'Authorization': `bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
             }
         });
         console.log('Request:', request);
-        const response = await request.data
+        const response = await request.data.body
         console.log(response)
         return response
     },
@@ -36,16 +35,16 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(getUserInfo.pending, (state) => {
+        .addCase(getUserProfile.pending, (state) => {
             state.loading = true;
             state.user = null;
         })
 
-        .addCase(getUserInfo.fulfilled, (state, action) => {
+        .addCase(getUserProfile.fulfilled, (state, action) => {
             state.loading = false;
             state.user = action.payload;
         })
-        .addCase(getUserInfo.rejected, (state, action) => {
+        .addCase(getUserProfile.rejected, (state, action) => {
             state.loading = false;
             state.user = null;
             console.error(action.error.message)

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import { loginUser } from '../store/authSlice';
-import { getUserInfo } from '../store/userSlice';
+import { getUserProfile } from '../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 
+// const token = localStorage.getItem('user');
 
 function LoginPage() {
 
@@ -11,25 +12,37 @@ function LoginPage() {
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberMe] = useState(false)
 
-    const {loading, error} = useSelector((state)=>state.auth)
+    const {loading, token, error} = useSelector((state)=>state.auth)
+    
 
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
    // logique de connexion vers la page user
-    const handleLoginEvent = (e) => {
+    const handleLoginEvent = async(e) => {
         e.preventDefault();
         let userCredentiels = { 
             email, password
-        }
-        dispatch(loginUser(userCredentiels)).then((result)=>{
-            if(result.payload){
+        };
+        try {
+        await dispatch(loginUser(userCredentiels)).then((result)=>{
+            if(result.payload) {
                 setEmail('');
                 setPassword('');
                 navigate('/Userprofil');
-            };
+                dispatch(getUserProfile(result.payload));
+                
+                // if (token) {
+                    //     dispatch(getUserProfile(result.payload.token))
+                    // } else {
+                        // // rediriger vers la page de login
+                        // navigate('/Login');
+                        // }
+            }
         });
-        dispatch(getUserInfo())
+        } catch (error) {
+            console.error(error);
+        }
     };
 
 

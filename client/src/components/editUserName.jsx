@@ -1,13 +1,16 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { getUserInfo } from '../store/userSlice';
+import { useSelector } from 'react-redux';
+import { getUserProfile } from '../store/userSlice';
 
 const Edit = () => {
 
+  const user = useSelector((state) => state.user.user);
 
   return (
     <div className="header">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
+      { user &&
+        <h1>Welcome back<br />{user.firstName} {user.lastName}!</h1>
+      }
         <button className="edit-button">Edit Name</button>
       </div>
   );

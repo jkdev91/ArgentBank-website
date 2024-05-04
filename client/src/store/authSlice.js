@@ -8,35 +8,34 @@ export const loginUser = createAsyncThunk(
     async (userCredentiels) => {
         const request = await axios.post('http://localhost:3001/api/v1/user/login', userCredentiels);
         const response = await request.data.body.token;
-        localStorage.setItem('user', JSON.stringify(response));
+        console.log(response)
+        // localStorage.setItem('user', response);
         return response
     }
 )
-
-
 
 const authSlice = createSlice({
     name: 'auth',
     initialState:{
         loading: false,
-        user: null,
+        token: null,
         error: null,
     },
     extraReducers:(builder)=>{
         builder
         .addCase(loginUser.pending,(state)=>{
             state.loading = true;
-            state.user = null;
+            state.token = null;
             state.error = null;
         })
         .addCase(loginUser.fulfilled,(state, action)=>{
             state.loading = false;
-            state.user = action.payload;
+            state.token = action.payload;
             state.error = null;
         })
         .addCase(loginUser.rejected,(state, action)=>{
             state.loading = false;
-            state.user = null;
+            state.token = null;
             console.log(action.error.message);
             if(action.error.message === 'Request failed with status code 400'){
                 state.error = 'Access Denied! Invalid Credentials';

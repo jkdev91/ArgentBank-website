@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import UserNavLink from "./UserNavLink";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 
 function Header() {
@@ -8,19 +9,22 @@ function Header() {
     const location = useLocation();
     const [isUserSignedIn, setisUserSignedIn] = useState(false);
     const [token, setToken] = useState(null);
-
+    
+    const user = useSelector((state) => state.user.user);
+    console.log(user)
+    
     useEffect(() => {
         const storedToken = localStorage.getItem("user");
         setToken(storedToken);
         setisUserSignedIn(!!storedToken);
-      }, []);
-
-
+    }, []);
+    
+    
     useEffect(() => {
         const storedToken = localStorage.getItem("user");
         setisUserSignedIn(!!storedToken);
-      }, [location.pathname]); 
-
+    }, [location.pathname]); 
+    
     
     return (
         <header>
@@ -36,7 +40,7 @@ function Header() {
                 <div>
                     {isUserSignedIn && location.pathname === "/Userprofil" ? (
                         <>
-                        <UserNavLink username="john" />
+                        {user && <UserNavLink username= {user.userName} />}
                      <Link className="main-nav-item" to="/" onClick={() => {
                         localStorage.removeItem("user");
                         setisUserSignedIn(false)
