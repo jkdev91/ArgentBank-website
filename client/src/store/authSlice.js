@@ -14,6 +14,16 @@ export const loginUser = createAsyncThunk(
     }
 )
 
+
+// Action asynchrone pour la deconnexion
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async() => {
+        return null;
+    }
+)
+
+
 const authSlice = createSlice({
     name: 'auth',
     initialState:{
@@ -45,6 +55,9 @@ const authSlice = createSlice({
 
             }
         })
+        .addCase(logout.fulfilled,(state) =>{
+            state.token = null
+        })        
     }
 });
 

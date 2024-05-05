@@ -1,10 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-
-// const token = localStorage.getItem('user');
-// const token = useSelector((state) => state.auth.token)
 
 
 // action asynchrome pour récuperer les infos du user
@@ -17,12 +13,25 @@ export const getUserProfile = createAsyncThunk(
                 'Authorization': `Bearer ${token}`,
             }
         });
-        console.log('Request:', request);
         const response = await request.data.body
         console.log(response)
         return response
     },
 );
+
+
+// action pour effacer les données de l'utilisateur
+export const clearUserData = createSlice({
+    name: 'clearUserData',
+    initialState: {},
+    reducers: {
+        clearUser: (state) => {
+            state.user = null;
+        }
+    }
+});
+
+export const { clearUser } = clearUserData.actions;
 
 
 
@@ -31,7 +40,6 @@ const userSlice = createSlice({
     initialState: {
         loading: false,
         user: null,
-
     },
     extraReducers: (builder) => {
         builder
@@ -48,8 +56,8 @@ const userSlice = createSlice({
             state.loading = false;
             state.user = null;
             console.error(action.error.message)
-        });
-    },
+        })
+    }
 });
 
 export default userSlice.reducer;

@@ -1,30 +1,27 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import UserNavLink from "./UserNavLink";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../store/authSlice";
+import { clearUserData } from "../store/userSlice";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 
 
 function Header() {
 
-    const location = useLocation();
-    const [isUserSignedIn, setisUserSignedIn] = useState(false);
-    const [token, setToken] = useState(null);
-    
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const user = useSelector((state) => state.user.user);
-    console.log(user)
-    
+    const dispatch = useDispatch();
+    // const navigate = useNavigate();
+
     useEffect(() => {
-        const storedToken = localStorage.getItem("user");
-        setToken(storedToken);
-        setisUserSignedIn(!!storedToken);
-    }, []);
+        setIsLoggedIn(!!user);
+      }, [user]);
     
-    
-    useEffect(() => {
-        const storedToken = localStorage.getItem("user");
-        setisUserSignedIn(!!storedToken);
-    }, [location.pathname]); 
-    
+    const handleLogout = () => {
+        dispatch(logout()); // dispatcher l'action de déconnexion
+        dispatch(clearUserData()); // effacer les données de l'utilisateur du store 
+        // navigate("/"); // Rediriger l'utilisateur vers la page d'accueil
+    };
     
     return (
         <header>
@@ -38,13 +35,10 @@ function Header() {
                     <h1 className="sr-only">Argent Bank</h1>
                 </Link>
                 <div>
-                    {isUserSignedIn && location.pathname === "/Userprofil" ? (
+                    {isLoggedIn ? (
                         <>
-                        {user && <UserNavLink username= {user.userName} />}
-                     <Link className="main-nav-item" to="/" onClick={() => {
-                        localStorage.removeItem("user");
-                        setisUserSignedIn(false)
-                     }}>
+                         <UserNavLink username= {user.userName} />
+                     <Link className="main-nav-item" to="/" onClick={handleLogout} >
                      <i className="fa fa-sign-out"></i>
                        Sign out
                      </Link>
@@ -58,7 +52,7 @@ function Header() {
                 </div>
             </nav>
         </header>
-    )
+    );
 }
 
 export default Header
