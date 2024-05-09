@@ -21,6 +21,7 @@ function Header() {
         dispatch(logout()); // dispatcher l'action de déconnexion
         dispatch(clearUserData()); // effacer les données de l'utilisateur du store 
         // navigate("/"); // Rediriger l'utilisateur vers la page d'accueil
+        sessionStorage.clear();
     };
     
     return (

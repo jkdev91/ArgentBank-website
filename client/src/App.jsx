@@ -1,10 +1,12 @@
-import { Routes, Route } from "react-router-dom";
+import "./styles/styles.css"
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import Home from "./pages/Homepage.jsx";
 import LoginPage from "./pages/Loginpage.jsx";
 import Userprofil from "./pages/Userpage.jsx";
-import "./styles/styles.css"
+import { Routes, Route } from "react-router-dom";
+
+
 
 function App() {
   return (
