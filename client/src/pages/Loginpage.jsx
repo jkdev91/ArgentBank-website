@@ -12,8 +12,8 @@ function LoginPage() {
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberMe] = useState(false)
 
-    const {loading, token, error} = useSelector((state)=>state.auth)
-    
+    const {loading, error} = useSelector((state)=>state.auth)
+    const userCredentiels = {}
 
    const dispatch = useDispatch()
    const navigate = useNavigate()
@@ -31,13 +31,6 @@ function LoginPage() {
                 setPassword('');
                 navigate('/Userprofil');
                 dispatch(getUserProfile(result.payload));
-                
-                // if (token) {
-                    //     dispatch(getUserProfile(result.payload.token))
-                    // } else {
-                        // // rediriger vers la page de login
-                        // navigate('/Login');
-                        // }
             }
         });
         } catch (error) {
@@ -53,7 +46,6 @@ function LoginPage() {
         <section className="sign-in-content">
             <i className="fa fa-user-circle sign-in-icon"></i>
             <h1>Sign In</h1>
-            {/* {error && <div>{error}</div>} */}
             <form onSubmit={handleLoginEvent}>
             <div className="input-wrapper">
                 <label htmlFor="email">Email</label>

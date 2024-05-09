@@ -1,19 +1,31 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { getUserProfile } from '../store/userSlice';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { openModal } from '../store/editSlice';
+import UserNameModal from './editFormModal';
+
+
 
 const Edit = () => {
 
   const user = useSelector((state) => state.user.user);
+  const isModalOpen = useSelector((state) => state.useredit.isModalOpen);
+  const dispatch = useDispatch();
 
-  return (
-    <div className="header">
-      { user &&
-        <h1>Welcome back<br />{user.firstName} {user.lastName}!</h1>
-      }
-        <button className="edit-button">Edit Name</button>
-      </div>
-  );
+  const handleOpenModal = () => {
+    dispatch(openModal());
+  };
+ 
+
+    return (
+      <div className="header">
+        { user &&
+          <h1>Welcome back<br />{user.firstName} {user.lastName}!</h1>
+        }
+          <button className="edit-button" onClick={handleOpenModal}>Edit Name</button>
+          {isModalOpen && <UserNameModal />}
+        </div>
+    );
+ 
 };
 
 export default Edit;

@@ -156,7 +156,7 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.sign-in-button {
+.sign-in-button, .editsubmit-button {
   display: block;
   width: 100%;
   padding: 8px;
@@ -168,7 +168,7 @@ body {
   color: #fff;
 }
 
-.sign-in-content {
+.sign-in-content, .modal-content {
   box-sizing: border-box;
   background-color: white;
   width: 300px;
@@ -295,4 +295,26 @@ body {
 
 .fa-user-circle {
   padding-right: 5px;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.close-button {
+  color: #2c3e50;
+  font-size: xx-large;
+  cursor: pointer;
+}
+
+.modal-content {
+  border: solid;
+
+}
+
+.modal-content h2, label {
+  color: #2c3e50;
 }
