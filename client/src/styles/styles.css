@@ -318,3 +318,7 @@ body {
 .modal-content h2, label {
   color: #2c3e50;
 }
+
+.alert {
+  color: red;
+}

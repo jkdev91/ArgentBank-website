@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { updateUserProfile } from '../store/editSlice';
 import axios from 'axios';
 
 
@@ -56,6 +57,9 @@ const userSlice = createSlice({
             state.loading = false;
             state.user = null;
             console.error(action.error.message)
+        })
+        .addCase(updateUserProfile.fulfilled, (state, action) => {
+            state.user = action.payload
         })
     }
 });

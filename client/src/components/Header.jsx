@@ -11,7 +11,6 @@ function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const user = useSelector((state) => state.user.user);
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
 
     useEffect(() => {
         setIsLoggedIn(!!user);
@@ -20,7 +19,6 @@ function Header() {
     const handleLogout = () => {
         dispatch(logout()); // dispatcher l'action de déconnexion
         dispatch(clearUserData()); // effacer les données de l'utilisateur du store 
-        // navigate("/"); // Rediriger l'utilisateur vers la page d'accueil
         sessionStorage.clear();
     };
     
@@ -38,7 +36,7 @@ function Header() {
                 <div>
                     {isLoggedIn ? (
                         <>
-                         <UserNavLink username= {user.userName} />
+                         <UserNavLink username= {user && user.userName} />
                      <Link className="main-nav-item" to="/" onClick={handleLogout} >
                      <i className="fa fa-sign-out"></i>
                        Sign out

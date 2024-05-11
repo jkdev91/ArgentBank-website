@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+
 
 
 
 // action asynchrome pour modifier le username de l'utilisateur
 export const updateUserProfile = createAsyncThunk(
     'user/updateUserProfile',
-    async (editUsername, token) => {
+    async (editUsername, thunkapi) => {
+        const token = thunkapi.getState().auth.token
         const request = await axios.put('http://localhost:3001/api/v1/user/profile', editUsername, {
             headers: {
                 'content-type': "application/json",
@@ -24,7 +25,7 @@ export const updateUserProfile = createAsyncThunk(
 const updateUserSlice = createSlice({
     name: 'useredit',
     initialState: {
-        user: 0,
+        user: null,
         isModalOpen: false,
         updateUserNameStatus: 'idle',
         updateUserNameError: null,

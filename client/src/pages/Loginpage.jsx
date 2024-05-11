@@ -13,7 +13,7 @@ function LoginPage() {
     const [rememberMe, setRememberMe] = useState(false)
 
     const {loading, error} = useSelector((state)=>state.auth)
-    const userCredentiels = {}
+    // const userCredentiels = {}
 
    const dispatch = useDispatch()
    const navigate = useNavigate()
