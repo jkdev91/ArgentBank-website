@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { updateUserProfile } from '../store/editSlice';
 import axios from 'axios';
+import { PURGE } from 'redux-persist';
 
 
 
@@ -61,7 +62,13 @@ const userSlice = createSlice({
         .addCase(updateUserProfile.fulfilled, (state, action) => {
             state.user = action.payload
         })
+        .addCase(PURGE, (state) => {
+            console.log('Purging userSlice state');
+            state.loading = false;
+            state.user = null;
+        })
     }
 });
 
 export default userSlice.reducer;
+

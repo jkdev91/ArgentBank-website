@@ -100,7 +100,7 @@ paths:
         '400':
           description: Invalid Fields
         '500':
-          description: Internal Server Error
+          description: Internal Server Error          
 securityDefinitions:
   Bearer:
     type: apiKey

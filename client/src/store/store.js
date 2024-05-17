@@ -10,7 +10,7 @@ const sessionStorage = createWebStorage('session');
 
 const persistConfig = {
   key:'root',
-  storage: sessionStorage
+  storage: sessionStorage,
 }
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);

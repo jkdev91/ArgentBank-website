@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import { PURGE } from 'redux-persist';
 
 // Action asynchrone pour la connexion
 export const loginUser = createAsyncThunk(
@@ -56,7 +56,15 @@ const authSlice = createSlice({
             }
         })
         .addCase(logout.fulfilled,(state) =>{
+            state.loading = false;
             state.token = null
+            state.error = null;
+        })
+        .addCase(PURGE, (state)=>{
+            console.log('Purging authSlice state');
+            state.loading = true;
+            state.token = null;
+            state.error = null;
         })        
     }
 });

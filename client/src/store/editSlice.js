@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { PURGE } from 'redux-persist';
 
 
 
@@ -52,7 +53,12 @@ const updateUserSlice = createSlice({
         .addCase(updateUserProfile.rejected, (state, action) => {
             state.updateUserNameStatus = 'failed';
             state.updateUserNameError = action.error.message;
-        });
+        })
+        .addCase(PURGE, (state) => {
+            console.log('Purging editSlice state');
+            state.user = null;
+            state.updateUserNameError = null;
+        })
 
     },
 });
