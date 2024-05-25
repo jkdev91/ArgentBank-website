@@ -8,20 +8,18 @@ export const loginUser = createAsyncThunk(
     async (userCredentiels) => {
         const request = await axios.post('http://localhost:3001/api/v1/user/login', userCredentiels);
         const response = await request.data.body.token;
-        console.log(response)
-        // localStorage.setItem('user', response);
         return response
     }
 )
 
 
 // Action asynchrone pour la deconnexion
-export const logout = createAsyncThunk(
-    'auth/logout',
-    async() => {
-        return null;
-    }
-)
+// export const logout = createAsyncThunk(
+//     'auth/logout',
+//     async() => {
+//         return null;
+//     }
+// )
 
 
 const authSlice = createSlice({
@@ -30,6 +28,17 @@ const authSlice = createSlice({
         loading: false,
         token: null,
         error: null,
+        isChecked: false
+    },
+    reducers: {
+        isChecked: (state, action) => {
+            state.isChecked = action.payload;
+        },
+        logout: (state) => {
+            state.loading = false;
+            state.token = null;
+            state.error = null;
+        }
     },
     extraReducers:(builder)=>{
         builder
@@ -55,18 +64,19 @@ const authSlice = createSlice({
 
             }
         })
-        .addCase(logout.fulfilled,(state) =>{
-            state.loading = false;
-            state.token = null
-            state.error = null;
-        })
+        // .addCase(logout.fulfilled,(state) =>{
+        //     state.loading = false;
+        //     state.token = null
+        //     state.error = null;
+        // })
         .addCase(PURGE, (state)=>{
-            console.log('Purging authSlice state');
             state.loading = true;
             state.token = null;
             state.error = null;
+            state.isChecked = false
         })        
     }
 });
 
+export const {isChecked, logout} = authSlice.actions;
 export default authSlice.reducer;

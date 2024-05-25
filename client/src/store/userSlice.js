@@ -16,25 +16,9 @@ export const getUserProfile = createAsyncThunk(
             }
         });
         const response = await request.data.body
-        console.log(response)
         return response
     },
 );
-
-
-// action pour effacer les données de l'utilisateur
-export const clearUserData = createSlice({
-    name: 'clearUserData',
-    initialState: {},
-    reducers: {
-        clearUser: (state) => {
-            state.user = null;
-        }
-    }
-});
-
-export const { clearUser } = clearUserData.actions;
-
 
 
 const userSlice = createSlice({
@@ -42,6 +26,12 @@ const userSlice = createSlice({
     initialState: {
         loading: false,
         user: null,
+    },
+    reducers: {
+        clearUser: (state) => {
+            state.loading = false;
+            state.user = null;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -63,7 +53,6 @@ const userSlice = createSlice({
             state.user = action.payload
         })
         .addCase(PURGE, (state) => {
-            console.log('Purging userSlice state');
             state.loading = false;
             state.user = null;
         })
@@ -71,4 +60,5 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { clearUser } = userSlice.actions;
 

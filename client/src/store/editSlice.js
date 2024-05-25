@@ -55,7 +55,6 @@ const updateUserSlice = createSlice({
             state.updateUserNameError = action.error.message;
         })
         .addCase(PURGE, (state) => {
-            console.log('Purging editSlice state');
             state.user = null;
             state.updateUserNameError = null;
         })

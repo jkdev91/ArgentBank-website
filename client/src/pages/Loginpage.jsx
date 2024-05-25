@@ -1,19 +1,17 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
-import { loginUser } from '../store/authSlice';
+import { loginUser, isChecked }  from '../store/authSlice';
 import { getUserProfile } from '../store/userSlice';
 import { useNavigate } from 'react-router-dom';
 
-// const token = localStorage.getItem('user');
 
 function LoginPage() {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [rememberMe, setRememberMe] = useState(false)
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [rememberMe, setRememberMe] = useState(false);
 
     const {loading, error} = useSelector((state)=>state.auth)
-    // const userCredentiels = {}
 
    const dispatch = useDispatch()
    const navigate = useNavigate()
@@ -33,11 +31,15 @@ function LoginPage() {
                 dispatch(getUserProfile(result.payload));
             }
         });
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    } catch (error) {
+        console.error(error);
+    }
+};
 
+const handleRememberMeChange = (e) => {
+    setRememberMe(e.target.checked); // Mettre à jour l'état local rememberMe
+    dispatch(isChecked(e.target.checked)); //  Mettre à jour rememberMe dans le store
+};
 
 
     return (
@@ -56,16 +58,14 @@ function LoginPage() {
                 <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <div className="input-remember">
-                <input type="checkbox" id="remember-me" value={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
+                <input type="checkbox" id="remember-me" checked = {rememberMe} onChange={handleRememberMeChange} />
                 <label htmlFor="remember-me">Remember me</label>
             </div>
-            {/*<!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-            {/* <a href="./Userprofil" className="sign-in-button">Sign In</a> */}
-            {/*<!-- SHOULD BE THE BUTTON BELOW --> */}
+
             <button className="sign-in-button">
                 {loading?'Loading...' : 'Sign In'}
             </button>
-            {/*<!--  --> */}
+
             {error&&(
                 <div className='alert' role='alert'>{error}</div>
             )}
