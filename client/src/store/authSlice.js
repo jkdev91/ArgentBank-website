@@ -13,15 +13,6 @@ export const loginUser = createAsyncThunk(
 )
 
 
-// Action asynchrone pour la deconnexion
-// export const logout = createAsyncThunk(
-//     'auth/logout',
-//     async() => {
-//         return null;
-//     }
-// )
-
-
 const authSlice = createSlice({
     name: 'auth',
     initialState:{
@@ -31,15 +22,15 @@ const authSlice = createSlice({
         isChecked: false
     },
     reducers: {
-        isChecked: (state, action) => {
-            state.isChecked = action.payload;
-        },
         logout: (state) => {
             state.loading = false;
             state.token = null;
             state.error = null;
-        }
+        },
+        isChecked: (state, action) => {
+            state.isChecked = action.payload;
     },
+},
     extraReducers:(builder)=>{
         builder
         .addCase(loginUser.pending,(state)=>{
@@ -64,11 +55,6 @@ const authSlice = createSlice({
 
             }
         })
-        // .addCase(logout.fulfilled,(state) =>{
-        //     state.loading = false;
-        //     state.token = null
-        //     state.error = null;
-        // })
         .addCase(PURGE, (state)=>{
             state.loading = true;
             state.token = null;
