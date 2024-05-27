@@ -41,7 +41,6 @@ const handleRememberMeChange = (e) => {
     dispatch(isChecked(e.target.checked)); //  Mettre à jour rememberMe dans le store
 };
 
-
     return (
     <>
         <main className="main bg-dark">
